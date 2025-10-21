@@ -1,0 +1,30 @@
+{
+    "name": "azureextensionui",
+    "description": "Used for unit tests in this package.",
+    "version": "0.0.1",
+    "aiKey": "test-ai-key",
+    "publisher": "ms-azuretools",
+    "main": "./extension",
+    "engines": {
+        "vscode": "^1.23.0"
+    },
+    "activationEvents": [
+        "*"
+    ],
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.testGetAccounts",
+                "title": "Test the getAccounts() API"
+            },
+            {
+                "command": "extension.testGetSessionWithCreate",
+                "title": "Test the getSession() API with createIfNone=true"
+            },
+            {
+                "command": "extension.testGetSessionSilently",
+                "title": "Test the getSession() API with silent=true"
+            }
+        ]
+    }
+}
