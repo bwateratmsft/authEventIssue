@@ -14,16 +14,12 @@
     "contributes": {
         "commands": [
             {
-                "command": "extension.testGetAccounts",
-                "title": "Test the getAccounts() API"
+                "command": "extension.signIn",
+                "title": "Sign in to new account (clearSessionPreference=true)"
             },
             {
-                "command": "extension.testGetSessionWithCreate",
-                "title": "Test the getSession() API with createIfNone=true"
-            },
-            {
-                "command": "extension.testGetSessionSilently",
-                "title": "Test the getSession() API with silent=true"
+                "command": "extension.parallelGetSessions",
+                "title": "Test parallel silent getSession() API calls"
             }
         ]
     }

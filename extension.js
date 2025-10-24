@@ -12,30 +12,32 @@ function activate() {
     const outputChannel = vscode.window.createOutputChannel('Auth provider tests', { log: true });
 
     vscode.authentication.onDidChangeSessions(async (e) => {
-        outputChannel.warn(`Authentication sessions changed for provider: ${e.provider.id}`);
+        outputChannel.debug(`Authentication sessions changed for provider: ${e.provider.id}`);
     });
 
-    vscode.commands.registerCommand('extension.testGetAccounts', async () => {
-        outputChannel.info('Testing get accounts...');
+    vscode.commands.registerCommand('extension.signIn', async () => {
+        await vscode.authentication.getSession('microsoft', [], { createIfNone: true, clearSessionPreference: true });
+    });
+
+    vscode.commands.registerCommand('extension.parallelGetSessions', async () => {
         const accounts = await vscode.authentication.getAccounts('microsoft');
-        outputChannel.info(`Found ${accounts.length} accounts.`);
-    });
+        outputChannel.info(`Found ${accounts.length} accounts`);
 
-    vscode.commands.registerCommand('extension.testGetSessionWithCreate', async () => {
-        outputChannel.info('Testing get session with createIfNone...');
-        const session = await vscode.authentication.getSession('microsoft', [], { createIfNone: true });
-        outputChannel.info(`Got session: ${session.id}`);
-    });
+        const sessionPromises = accounts.map(async account => {
+            const session = await vscode.authentication.getSession('microsoft', [], { silent: true, account });
 
-    vscode.commands.registerCommand('extension.testGetSessionSilently', async () => {
-        outputChannel.info('Testing get session silently...');
-        const session = await vscode.authentication.getSession('microsoft', [], { createIfNone: false, silent: true });
+            if (session) {
+                outputChannel.info(`Found session for account: ${account.label}`);
+                outputChannel.info(`Session's account label: ${session.account.label}`);
+                if (account.label.toLowerCase() !== session.account.label.toLowerCase()) {
+                    outputChannel.error(`Account label mismatch: ${account.label} !== ${session.account.label}`);
+                }
+            } else {
+                outputChannel.error(`No session found for account: ${account.label}`);
+            }
+        });
 
-        if (session) {
-            outputChannel.info(`Got session: ${session.id}`);
-        } else {
-            outputChannel.info('No session found.');
-        }
+        await Promise.all(sessionPromises);
     });
 }
 exports.activate = activate;
