@@ -11,6 +11,19 @@
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
+        },
+        {
+            "name": "Launch Extension (Web)",
+            "type": "extensionHost",
+            "request": "launch",
+            "debugWebWorkerHost": true,
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}",
+				"--extensionDevelopmentKind=web"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
         }
     ]
 }

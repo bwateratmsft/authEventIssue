@@ -1,12 +1,13 @@
 {
-    "name": "azureextensionui",
-    "description": "Used for unit tests in this package.",
+    "name": "autheventissue",
+    "description": "Used for testing auth provider",
     "version": "0.0.1",
-    "aiKey": "test-ai-key",
+    "license": "MIT",
     "publisher": "ms-azuretools",
-    "main": "./extension",
+    "main": "./extension.js",
+    "browser": "./extension.js",
     "engines": {
-        "vscode": "^1.23.0"
+        "vscode": "^1.105.0"
     },
     "activationEvents": [
         "*"
@@ -15,12 +16,26 @@
         "commands": [
             {
                 "command": "extension.signIn",
-                "title": "Sign in to new account (clearSessionPreference=true)"
+                "title": "AuthExtn: Sign in to new account (clearSessionPreference=true)"
+            },
+            {
+                "command": "extension.getAccounts",
+                "title": "AuthExtn: List accounts"
+            },
+            {
+                "command": "extension.getSessionSilent",
+                "title": "AuthExtn: Get session silently"
             },
             {
                 "command": "extension.parallelGetSessions",
-                "title": "Test parallel silent getSession() API calls"
+                "title": "AuthExtn: Test parallel silent getSession() API calls"
             }
         ]
+    },
+    "scripts": {
+        "run-in-browser": "vscode-test-web --extensionDevelopmentPath=. ."
+    },
+    "devDependencies": {
+        "@vscode/test-web": "^0.0.75"
     }
 }
