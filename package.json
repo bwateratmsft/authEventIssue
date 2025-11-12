@@ -33,9 +33,11 @@
         ]
     },
     "scripts": {
-        "run-in-browser": "vscode-test-web --extensionDevelopmentPath=. ."
+        "run-in-browser": "vscode-test-web --extensionDevelopmentPath=. .",
+        "package": "vsce package --allow-star-activation --allow-missing-repository"
     },
     "devDependencies": {
-        "@vscode/test-web": "^0.0.75"
+        "@vscode/test-web": "^0.0.75",
+        "@vscode/vsce": "^3.7.0"
     }
 }
